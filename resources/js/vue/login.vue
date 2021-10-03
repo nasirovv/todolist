@@ -22,10 +22,9 @@
 
                 <div class="form-group row mb-0">
                     <div class="col-md-8 offset-md-4">
-                        <button type="submit" class="btn btn-primary">
-                            Login
-                        </button>
-
+                            <button type="submit" class="btn btn-primary">
+                                    Login
+                            </button>
                     </div>
                 </div>
             </form>
@@ -47,10 +46,19 @@ export default {
         handleLogin(){
             axios.get('/sanctum/csrf-cookie').then(response => {
                 axios.post('/api/login', this.formData).then(response => {
-                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
-                    localStorage.setItem( 'token', JSON.stringify(response.data.token) );
-                    console.log(response);
+                    if(response.status === 201){
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token;
+                        localStorage.setItem( 'token', response.data.token);
+                        this.$store.commit("setAuthentication", true);
+                        this.$router.replace({ name: "todo" });
+                        console.log(response);
+                    }
                 })
+                .catch(error => {
+                    console.log(error)
+                })
+            }).catch(error => {
+                console.log(error)
             });
         }
     }

@@ -25,6 +25,10 @@
                 }
                 axios.post('api/item/store', {
                     item: this.item
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
                 })
                     .then( response => {
                         if (response.status === 201){

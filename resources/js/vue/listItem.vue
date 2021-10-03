@@ -22,6 +22,10 @@ export default {
         updateCheck() {
             axios.put('api/item/'+ this.item.id, {
                 item: this.item
+            },{
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
             })
                 .then( response => {
                     if ( response.status === 200 ){
@@ -33,7 +37,11 @@ export default {
             })
         },
         removeItem() {
-            axios.delete('api/item/' + this.item.id)
+            axios.delete('api/item/' + this.item.id, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
             .then( response => {
                 if (response.status === 200){
                     this.$emit('removeItem')

@@ -29,9 +29,15 @@ import listView from "./listView";
         methods: {
             getItems() {
                 axios
-                    .get('api/items')
+                    .get('api/items', {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`
+                        }
+                    })
                     .then( response => {
-                        this.items = response.data;
+                        if(response.status === 200){
+                            this.items = response.data;
+                        }
                     })
                     .catch( error => {
                         console.log(error);
