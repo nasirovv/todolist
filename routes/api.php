@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
@@ -23,15 +24,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 
+Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [LoginController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('items', [ItemController::class, 'index']);
     Route::group(['prefix' => 'item'], function (){
         Route::post('store', [ItemController::class, 'store']);
-        Route::put('{id}', [ItemController::class, 'update']);
-        Route::delete('{id}', [ItemController::class, 'destroy']);
+        Route::put('/', [ItemController::class, 'update']);
+        Route::delete('/', [ItemController::class, 'destroy']);
     });
+
+    Route::post('logout', [LoginController::class, 'logout']);
+
 });
 
 

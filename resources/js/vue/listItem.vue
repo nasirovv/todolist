@@ -20,7 +20,7 @@ export default {
     props: ['item'],
     methods: {
         updateCheck() {
-            axios.put('api/item/'+ this.item.id, {
+            axios.put('api/item', {
                 item: this.item
             },{
                 headers: {
@@ -37,7 +37,7 @@ export default {
             })
         },
         removeItem() {
-            axios.delete('api/item/' + this.item.id, {
+            axios.delete('api/item', {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }

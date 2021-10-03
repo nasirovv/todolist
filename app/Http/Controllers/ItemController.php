@@ -14,7 +14,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return Item::orderBy('created_at', 'DESC')->get();
+        return Item::where('user_id', auth()->id())->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -37,6 +37,7 @@ class ItemController extends Controller
     {
         $newItem = new Item;
         $newItem->name = $request->item['name'];
+        $newItem->user_id = auth()->id();
         $newItem->save();
 
         return $newItem;
@@ -71,9 +72,9 @@ class ItemController extends Controller
      * @param  int  $id
      * @return string
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $existingItem = Item::find($id);
+        $existingItem = Item::find(auth()->id());
         if ($existingItem){
             $existingItem->completed = $request->item['completed'] ? true : false;
             $existingItem->completed_at = $request->item['completed'] ? Carbon::now() : null;
@@ -90,9 +91,9 @@ class ItemController extends Controller
      * @param  int  $id
      * @return string
      */
-    public function destroy($id)
+    public function destroy()
     {
-        $existingItem = Item::find($id);
+        $existingItem = Item::find(auth()->id());
         if ($existingItem){
             $existingItem->delete();
             return "Item successfully deleted.";

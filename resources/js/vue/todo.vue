@@ -10,6 +10,15 @@
             @reloadList="getItems"
             :items="items"
         />
+        <form action="" @submit.prevent="logout" class="mt-5">
+        <div class="form-group row mb-0">
+            <div class="col-md-8 offset-md-4">
+                <button type="submit" class="btn btn-danger">
+                    Logout
+                </button>
+            </div>
+        </div>
+        </form>
     </div>
 </template>
 
@@ -42,7 +51,22 @@ import listView from "./listView";
                     .catch( error => {
                         console.log(error);
                     })
+            },
+            logout(){
+                axios.post('api/logout', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                }).then(response=>{
+                    if(response.status === 200){
+                        this.$store.commit("setAuthentication", false);
+                        this.$router.replace({ name: "login" });
+                    }
+                }).catch(error=>{
+                    console.log(error)
+                })
             }
+
         },
         created() {
             this.getItems();
