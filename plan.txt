@@ -1,0 +1,12 @@
+1. Install laravel
+2. configure .env file
+3. php artisan make:model with migrations
+4. Configure migrations
+5. php artisan migrate
+6. php artisan make:controller   create  Controllers
+7. Configure routes file  api.php  and web.php
+8. Configure ItemController  index, store, update, delete classes
+9. Check it with Postman
+10. So get started with frontend  Vue js
+11. install npm, vue with terminal
+12.
